@@ -6,7 +6,7 @@ document
   .querySelectorAll('video')
   .forEach(showControls);
 
-const observer = new MutationObserver(([mutation]) => {
+const observer = new MutationObserver(([mutation]) =>
   mutation
     .addedNodes
     .forEach(node =>
@@ -16,8 +16,8 @@ const observer = new MutationObserver(([mutation]) => {
           showControls($video);
           setMutedState($video);
         })
-  );
-});
+    )
+);
 
 observer.observe(
   document.getElementById('list-view-2'),
@@ -26,10 +26,12 @@ observer.observe(
 
 function showControls($video) {
   $video.controls = true;
+  return $video;
 }
 
 function setMutedState($video) {
   $video.muted = state.muted;
+  return $video;
 }
 
 // add global muted button

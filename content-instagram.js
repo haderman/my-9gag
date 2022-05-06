@@ -18,6 +18,7 @@ function showControls() {
 
       $video.controls = true;
 
+      // this remove the backgdrop of the video so the controls can be seen
       $article.querySelector('.PyenC')?.remove?.();
       $article.querySelector('div[aria-label=Control]')?.remove?.();
     });

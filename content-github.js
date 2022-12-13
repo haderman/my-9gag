@@ -11,17 +11,22 @@ const objTagToColor = {
 const arrTags = Object.keys(objTagToColor);
 const regexTag = new RegExp(`tag:(${arrTags.join('|')})$`);
 
-const $items = document.querySelectorAll('.js-commits-list-item');
+const observer = new MutationObserver(init);
+observer.observe(document.body, { attributes: true });
 
-$items.forEach($item => {
-  const strTagOrNull = selectTag($item);
-  if (strTagOrNull === null) {
-    return;
-  }
+function init() {
+  console.log('-- init --')
+  const $items = document.querySelectorAll('.js-commits-list-item');
+  $items.forEach($item => {
+    const strTagOrNull = selectTag($item);
+    if (strTagOrNull === null) {
+      return;
+    }
 
-  const $tag = createTagElement(strTagOrNull);
-  addElementToUI($item, $tag);
-});
+    const $tag = createTagElement(strTagOrNull);
+    addElementToUI($item, $tag);
+  });
+}
 
 function selectTag($elem) {
   const $commitDescription = $elem.querySelector('div > div > pre');
@@ -44,6 +49,12 @@ function selectTag($elem) {
 }
 
 function addElementToUI($target, $elemToAdd) {
+  const $addedElement = $target.querySelector('div > p > .haderman-github-commit-tag');
+  if ($addedElement !== null) {
+    // avoid duplicate the tag on the UI
+    return;
+  }
+
   const $commitTitle = $target.querySelector('div > p');
   if ($commitTitle === null) {
     return;
@@ -56,6 +67,7 @@ function createTagElement(strTag) {
   const objColor = objTagToColor[strTag];
 
   const $tag = document.createElement('span');
+  $tag.classList.add('haderman-github-commit-tag');
   $tag.textContent = strTag;
   $tag.style.padding = '0.5rem';
   $tag.style.backgroundColor = objColor.bg;

@@ -11,6 +11,9 @@
     }, {
       "matches": ["https://www.instagram.com/*"],
       "js": ["content-instagram.js"]
+    }, {
+      "matches": ["https://github.com/*"],
+      "js": ["content-github.js"]
     }
   ]
 }
